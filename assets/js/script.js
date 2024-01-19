@@ -29,6 +29,18 @@ var questions = [
 
 // Variables
 mainContentEl = document.querySelector(".main-content")
+// create into paragraph
+var homePEl = document.createElement("p");
+// create start quiz button
+var startBtnEl = document.createElement("button");
+// questions
+var quizQuestionsEl = document.querySelector(".quiz-questions");
+
+// var to be used for incrementing
+var q = 0;
+var currentQuestion = 0;
+var score = 0;
+
 
 
 
@@ -41,20 +53,41 @@ mainContentEl = document.querySelector(".main-content")
 
 var displayHomePage = function() {
     // create a heading
-    var homePageH1El = document.createElement("h1");
-    homePageH1El.className = "main-h1";
-    homePageH1El.textContent = "Welcome to Quiz Master!";
-    mainContentEl.appendChild(homePageH1El);
+    var homeH1El = document.createElement("h1");
+    homeH1El.className = "main-h1";
+    homeH1El.textContent = "Quiz Master";
+    mainContentEl.appendChild(homeH1El);
 
-    // create opening quiz master intro paragraph
-    var homePEl = document.createElement("p");
+    // displays opening quiz master intro paragraph
     homePEl.className = "intro-p";
     homePEl.textContent = "Welcome to Quiz Master. These questions will test your knowledge of a few different sports.";
     mainContentEl.appendChild(homePEl);
+
+    //displays start quiz button
+    startBtnEl.className = "start-btn";
+    startBtnEl.textContent = "Start Quiz";
+    mainContentEl.appendChild(startBtnEl);
     
 
 
 };
 
+var startQuiz = function() {
+
+    homePEl.remove();
+    startBtnEl.remove();
+
+    // displays questions
+    quizQuestionsEl.textContent = questions[q].question;
+    q++;
+
+
+}
+
+startBtnEl.addEventListener("click", startQuiz);
+
 // display the Home Page
 displayHomePage();
+
+// starts the quiz
+// startQuiz();
