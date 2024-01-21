@@ -35,10 +35,17 @@ var homePEl = document.createElement("p");
 var startBtnEl = document.createElement("button");
 // questions
 var quizQuestionsEl = document.querySelector(".quiz-questions");
+// choices
+var choicesEl = document.querySelector(".choices")
+// create ul for choices
+var choicesUlEl = document.createElement("ul");
+
+
 
 // var to be used for incrementing
 var q = 0;
-var currentQuestion = 0;
+// var currentQuestion = 0;
+var questionCounter = 0;
 var score = 0;
 
 
@@ -67,21 +74,33 @@ var displayHomePage = function() {
     startBtnEl.className = "start-btn";
     startBtnEl.textContent = "Start Quiz";
     mainContentEl.appendChild(startBtnEl);
-    
-
 
 };
 
 var startQuiz = function() {
-
+    console.log(questions)
     homePEl.remove();
     startBtnEl.remove();
 
     // displays questions
-    quizQuestionsEl.textContent = questions[q].question;
+    if ( q < questions.length) {
+        quizQuestionsEl.textContent = questions[q].question;
+    };
+
+    currentQuestion = questions[questionCounter];
+    // console.log(currentQuestion);
+    
+
+    // display choices
+    for (var i = 0; i < questions[q].choices.length; i++) {
+        var quizChoicesEl = document.createElement("li");
+        quizChoicesEl.setAttribute("class", "choice-list-items")
+        quizChoicesEl.textContent = questions[q].choices[i];
+        quizChoicesEl.id = i;
+        choicesEl.appendChild(choicesUlEl);
+        choicesUlEl.appendChild(quizChoicesEl);
+    }
     q++;
-
-
 }
 
 startBtnEl.addEventListener("click", startQuiz);
