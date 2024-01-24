@@ -39,12 +39,14 @@ var quizQuestionsEl = document.querySelector(".quiz-questions");
 var choicesEl = document.querySelector(".choices")
 // create ul for choices
 var choicesUlEl = document.createElement("ul");
+// answers
+var answersEl = document.querySelector(".answer");
 
 
 
 // var to be used for incrementing
 var q = 0;
-// var currentQuestion = 0;
+var currentQuestion = 0;
 var questionCounter = 0;
 var score = 0;
 
@@ -87,7 +89,7 @@ var startQuiz = function() {
         quizQuestionsEl.textContent = questions[q].question;
     };
 
-    currentQuestion = questions[questionCounter];
+    // currentQuestion = questions[questionCounter];
     // console.log(currentQuestion);
     
 
@@ -99,11 +101,31 @@ var startQuiz = function() {
         quizChoicesEl.id = i;
         choicesEl.appendChild(choicesUlEl);
         choicesUlEl.appendChild(quizChoicesEl);
+        quizChoicesEl.addEventListener("click", displayAnswer);
     }
+    
     q++;
 }
 
 startBtnEl.addEventListener("click", startQuiz);
+;
+
+function displayAnswer(event) {
+    console.log(event.target.textContent);
+    var answerP = document.createElement("p");
+    answerP.setAttribute("class", "answer-p");
+    answersEl.appendChild(answerP);
+    if (questions[currentQuestion].answer === event.target.textContent) {
+        answerP.textContent = "Niiice!";
+    } else {
+        answerP.textContent = "Nope!";
+    };
+
+    setTimeout(function() {
+        startQuiz();
+    }, 2000)
+    
+};
 
 // display the Home Page
 displayHomePage();
