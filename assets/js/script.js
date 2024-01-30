@@ -43,6 +43,14 @@ var choicesUlEl = document.createElement("ul");
 var answersEl = document.querySelector(".answer");
 //timer
 var quizTimerEl = document.querySelector(".timer");
+// player score
+var playerScoreEl = document.querySelector(".player-score");
+//form
+var formEl = document.querySelector(".form-group");
+//create player input
+var playerInputEl = document.createElement("input");
+// create submit button
+var submitBtn = document.createElement("button");
 
 
 
@@ -94,8 +102,11 @@ var startQuiz = function() {
     // displays questions
     if ( q < questions.length) {
         quizQuestionsEl.textContent = questions[q].question;
+        displayChoices();
+    } else {
+        return endQuiz();
     };
-    displayChoices();
+    
     
 
     // currentQuestion = questions[questionCounter];
@@ -134,6 +145,7 @@ function displayAnswer(event) {
         answerP.textContent = "Niiice!";
     } else {
         answerP.textContent = "Nope!";
+        startTime -=10;
     };
 
     setTimeout(function() {
@@ -143,6 +155,7 @@ function displayAnswer(event) {
         
     }, 1500)
     currentQuestion++;
+    score = startTime;
     
 };
 
@@ -158,19 +171,60 @@ var startTimer = function() {
             timerEl.textContent = startTime;
         } else {
             clearInterval(quizTime);
+            timerEl.textContent = score;
+            endQuiz();
+            playerScoreMessage();
+            displayForm();
         }
     }, 1000)
     console.log(quizTime);
-}
+};
 
 // remove last set of choices
 var removeChoices = function() {
     choicesUlEl.innerHTML = "";
-}
+};
 
 // remove correct/incorrect
 var removeAnswer = function() {
     answersEl.innerHTML="";
+};
+
+var endQuiz = function() {
+    startTime = 0;
+    quizQuestionsEl.remove();
+};
+
+// displays a message with the players score
+var playerScoreMessage = function() {
+    var messageEl = document.createElement("p");
+    if(score > 60) {
+        messageEl.textContent = `Good job your score is ${score}!`
+    } else {
+        messageEl.textContent = `Looks like you don't know much about sports. Your score was only ${score}.`
+    };
+
+    playerScoreEl.appendChild(messageEl);
+};
+
+var displayForm = function() {
+    //label
+    var labelEl = document.createElement("label");
+    labelEl.setAttribute("for", "username");
+    labelEl.textContent = ("Your username:")
+    labelEl.setAttribute("id", "form-label");
+    formEl.appendChild(labelEl);
+
+    //input
+    playerInputEl.setAttribute("type", "text");
+    playerInputEl.setAttribute("id", "username ");
+    formEl.appendChild(playerInputEl);
+
+    // submit button
+    submitBtn.setAttribute("type", "submit");
+    submitBtn.setAttribute("id", "submit-btn");
+    submitBtn.textContent = "Submit"
+    formEl.appendChild(submitBtn);
 }
 
 // display the Home Page
